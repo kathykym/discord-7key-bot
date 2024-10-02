@@ -3,6 +3,15 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
+# Environment variables files
+*.env
+
+# SQLite database files
+*.db
+
+# temporary output files
+commands/wordcloud/outputs/*
+
 # User-specific files
 *.rsuser
 *.suo
