@@ -1,0 +1,194 @@
+---
+BOT:
+    bot_db_file: "xxxxxx.db"
+    iidxme_db_file: "xxxxxx.db"
+    log_file: "xxxxxx.log"
+    default_colour_embed_border: 0xadcae3
+
+SERVER:
+    cmd_prefixes: "$.`!"
+    iidx_channel_id: xxxxxx
+    dan_role_id_dict:
+        insane_kaiden: xxxxxx
+        kiwami_kaiden: xxxxxx
+        kaiden: xxxxxx
+        chuuden: xxxxxx
+        10th_dan: xxxxxx
+        9th_dan: xxxxxx
+        8th_dan: xxxxxx
+
+COMMAND_ERROR:
+    msg_double_quote_misplaced: "你D double quote冇包好呀🤏"
+    msg_generic_error: "咦... 個嘢壞咗🚮"
+    colour_error: 0x9d2020
+
+ON_MESSAGE_FOLLOW_SUIT:
+    num_of_same_msg: 3
+    
+ON_MESSAGE_IIDX_RESULT_COMMENT:
+    attachment_ext_list: "jpg|jpeg|png|mp4|mov"
+    msg_next_dan_dict:
+        insane_kaiden: "overjoy未？"
+        kiwami_kaiden: "發皆未？"
+        kaiden: "極皆未？"
+        chuuden: "皆未？"
+        10th_dan: "中伝未？"
+        9th_dan: "十段未？"
+        8th_dan: "九段未？"
+    msg_comment_list: "teach|waste data|一般|要啦|勁到🛐|又有貨🛐|渣ga|基本啦|呢隻易|呢D唔計|你加油啦"
+
+IIDXME_PB:
+    title: "💿🎹 iidx.me 歷代 Personal Best"
+    usage: "```💿🎹 __**iidx.me 歷代 Personal Best**__\n
+            打你嘅iidx.me username同埋歌名keywords\n
+            幫你搵你歷代my best燈、分同miss count\n\n
+            **【用法】**\n
+            $iidxpb\n
+            ↳ <iidx.me username>\n
+            ↳ (optional) <sp/dp ~~*唔入當sp*~~><譜面難度: B/N/H/A/L ~~*唔入當全選*~~><level: 1-12 ~~*唔入當全選*~~>\n
+            ↳ <歌名keyword(s) ~~*可用%%代表任何字符 (wildcard)／多過一個word要用double quote包住*~~>\n\n
+            **【例子 & 會搵到咩譜面】**\n
+            $iidxpb user mirror\n
+            　*⇒ sp／全難度／Infinity Mirror*\n
+            $iidxpb user 7 luv%%u\n
+            　*⇒ sp／lv 7／LUV CAN SAVE U*\n
+            $iidxpb user L over\n
+            　*⇒ sp／LEGGENDARIA／Override*\n
+            $iidxpb user dp \"to india\"\n
+            　*⇒ dp／全難度／Fly Away To India*\n
+            $iidxpb user dph 純真可憐\n
+            　*⇒ dp／HYPER／純真可憐デザイア*\n
+            $iidxpb user dpn2 gambol\n
+            　*⇒ dp／NORMAL／lv 2／GAMBOL*```"
+    colour_embed_border: 0xf0ff00
+    colour_error: 0x9d2020
+    abbr_F-COMBO: "FC"
+    abbr_EXH-CLEAR: "EX"
+    abbr_H-CLEAR: "HC"
+    abbr_CLEAR: "NC"
+    abbr_E-CLEAR: "EC"
+    abbr_A-CLEAR: "AC"
+    abbr_FAILED: "FA"
+    abbr_NO PLAY: "NP"
+    emoji_B: "🟩"
+    emoji_N: "🟦"
+    emoji_H: "🟨"
+    emoji_A: "🟥"
+    emoji_L: "🟪"
+    msg_loading: "等等，幫緊你幫緊你"
+    msg_missing_args: "你打漏嘢喎🤏\n最起碼要入齊iidx.me username(s)同歌名keyword"
+    msg_too_many_args: "唔係咁用㗎🆖\nkeywords多過一隻字要用double quote包住"
+    msg_wrong_arg_format: "唔係咁用㗎🆖\nkeywords多過一隻字要用double quote包住"
+    msg_double_quote_misplaced: "唔係咁用㗎🆖\n你D double quote冇包好呀🤏"
+    msg_empty_username: "iidx.me username都唔係咁嘅format🚮"
+    msg_empty_keyword: "歌名keyword一隻字都唔打，你想搵乜㗎？🚮"
+    msg_user_not_found: "iidx.me冇呢個user喎🈚"
+    msg_result_not_found: "咩都搵唔到🈚"
+    msg_too_many_results: "太多歌中search criteria，淨係show頭幾個俾你"
+    msg_db_error: "讀唔到database，遲陣再試啦"
+    msg_iidxme_conn_failed: "連唔到去iidx.me，遲陣再試啦🔌"
+    msg_parse_page_error: "read唔到iidx.me嘅record🔍"
+    msg_generic_error: "咦... 個嘢壞咗🚮"
+    msg_has_MAX: "有MAX!!!✨ 準備緊BPL?🛐"
+    msg_all_FC_and_AAA: "你地高閃高✨🛐"
+    msg_all_FC: "你地高🛐"
+    msg_all_AAA: "你閃高✨"
+    msg_all_no_play: "你都冇打...🈚"
+    result_limit: 5
+
+IIDXME_SR:
+    title: "💿🎹 IIDX Score Rank 分數計算器"
+    usage: "```💿🎹 __**IIDX Score Rank 分數計算器**__\n
+            打歌名keywords\n
+            幫你計隻歌AAA-, AAA, MAX-, MAX嘅分數\n\n
+            **【用法】**\n
+            $iidxsr\n
+            ↳ (optional) <sp/dp ~~*唔入當sp*~~><譜面難度: B/N/H/A/L ~~*唔入當全選*~~><level: 1-12 ~~*唔入當全選*~~>\n
+            ↳ <歌名keyword(s) ~~*可用%%代表任何字符 (wildcard)／多過一個word要用double quote包住*~~>\n\n
+            **【例子 & 會搵到咩譜面嘅分數】**\n
+            $iidxsr mirror\n
+            　*⇒ sp／全難度／Infinity Mirror*\n
+            $iidxsr 7 luv%%u\n
+            　*⇒ sp／lv 7／LUV CAN SAVE U*\n
+            $iidxsr L over\n
+            　*⇒ sp／LEGGENDARIA／Override*\n
+            $iidxsr dp \"to india\"\n
+            　*⇒ dp／全難度／Fly Away To India*\n
+            $iidxsr dph 純真可憐\n
+            　*⇒ dp／HYPER／純真可憐デザイア*\n
+            $iidxsr dpn2 gambol\n
+            　*⇒ dp／NORMAL／lv 2／GAMBOL*```"
+    colour_embed_border: 0xf0ff00
+    colour_error: 0x9d2020
+    emoji_B: "🟩"
+    emoji_N: "🟦"
+    emoji_H: "🟨"
+    emoji_A: "🟥"
+    emoji_L: "🟪"
+    msg_notes_TBD: "(no data)"
+    msg_too_many_args: "唔係咁用㗎🆖\nkeywords多過一隻字要用double quote包住"
+    msg_wrong_arg_format: "唔係咁用㗎🆖\nkeywords多過一隻字要用double quote包住"
+    msg_empty_keyword: "歌名keyword一隻字都唔打，你想搵乜㗎？🚮"
+    msg_result_not_found: "咩都搵唔到🈚"
+    msg_too_many_results: "太多歌中search criteria，淨係show頭幾個俾你"
+    msg_generic_error: "咦... 個嘢壞咗🚮"
+    result_limit: 5
+
+WORD_CLOUD:
+    title: "🚾☁️ 易髦之 word cloud"
+    usage: "```🚾☁️ __**易髦之 word cloud**__\n
+            用 channel 嘅 messages 幫你 gen 個 word cloud \n\n
+            **【用法】**\n
+            $wordcloud\n
+            ↳ (optional) <emoji>\n
+            ↳ (optional) <@user>```"
+    colour_embed_border: 0x5ebaef
+    colour_error: 0x9d2020
+    msg_loading: "等等，畫緊舊雲俾你"
+    msg_too_many_args: "你打多咗嘢喎🆖\n打 $help wordcloud 望吓點用啦"
+    msg_wrong_arg_format: "唔係咁用㗎🆖\n打 $help wordcloud 望吓點用啦"
+    msg_no_words_found: "佢都唔講嘢，我畫唔到舊雲喎🈚"
+    msg_no_space_to_display_text: "個 emoji 太少 non-white space 放字，揀過第二個啦🚮"
+    msg_done: "畫完喇！係咪好靚呢🎨"
+    msg_done_without_emoji: "俾個 emoji 嚟嘛，算啦照畫俾你啦🖌"
+    msg_generic_error: "咦... 個嘢壞咗🚮"
+    message_history_limit: 500
+    #override_custom_emoji_id: ""   # for testing purpose
+    font_file: "commands/wordcloud/assets/NaikaiFont-Light.ttf"
+    with_emoji_bgcolour: 0xefefef
+    no_emoji_bgcolour: 0x101010
+    no_emoji_max_font_size: 300
+    no_emoji_min_font_size: 16
+    no_emoji_colour_map: "tab20"
+    wc_image_size: 800
+    plt_figsize: 6.5
+    output_file_path: "commands/wordcloud/outputs/"
+
+VOLUME:
+    title: "🐧🔊 企鵝煩膠指數"
+    usage: "```🐧🔊 __**企鵝煩膠指數**__\n
+            想我出多D聲定收聲，你話事！ \n\n
+            **【用法】**\n
+            睇而家音量：$volume\n
+            調較音量：$volume <音量：0-200>\n```"
+    colour_embed_border: 0xb5d8da
+    colour_error: 0x9d2020
+    vol_upper_bound: 200
+    vol_bar_length: 20
+    subtitle: "**音量**"
+    emoji_vol_on: "🟦"
+    emoji_vol_off: "⬜"
+    emoji_vol_handler: ""
+    msg_not_integer_input: "入個數字（0-200 嘅整數）啦"
+    msg_negative_vol: "音量邊有負數㗎"
+    msg_vol_exceeds_limit: "太大聲喇！"
+    msg_muted: "... 唔出聲囉🔇"
+    msg_low_vol_1_footer: "shhhhhhhhhh🤫"
+    msg_low_vol_2_footer: "shhhhh🤫🤏"
+    msg_normal_vol_footer: "聽一半唔聽一半😐"
+    msg_high_vol_1_footer: "大聲少少先📢🤏"
+    msg_high_vol_2_footer: "大聲公已準備好📢"
+    msg_max_vol: "大聲公已準備好！！！📢🔊"
+    msg_arg_error_footer: "再嚟過啦..."
+    msg_wrong_channel: "喺呢個channel唔work喎... I don't know why🤪"
+    msg_generic_error: "咦... 個嘢壞咗🚮"
