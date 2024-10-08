@@ -3,8 +3,8 @@
 
 This bot is designed to enhance the Discord experience for a rhythm game community in Hong Kong by providing useful commands to track personal best records in the rhythm game [Beatmania IIDX](https://p.eagate.573.jp/game/2dx/) and creating fun interactions among server members.
 
-## Commands
-### 🎵 Game Related Commands
+## 📜 Commands
+### Game Related Commands
 
 > **$iidxpb**
 
@@ -37,7 +37,7 @@ Usage: ``$iidxsr <mode><difficulty><level> <song_title_keywords>``
 
 _All arguments are case-insensitive._
 
-### 📜 Misc Commands
+### Misc Commands
 
 > **$wordcloud**
 
