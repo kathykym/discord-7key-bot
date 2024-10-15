@@ -60,7 +60,7 @@ IIDXME_PB:
             　*⇒ dp／HYPER／純真可憐デザイア*\n
             $iidxpb user dpn2 gambol\n
             　*⇒ dp／NORMAL／lv 2／GAMBOL*```"
-    colour_embed_border: 0xf0ff00
+    colour_embed_border: 0xeb36b7
     colour_error: 0x9d2020
     abbr_F-COMBO: "FC"
     abbr_EXH-CLEAR: "EX"
@@ -118,7 +118,7 @@ IIDXME_SR:
             　*⇒ dp／HYPER／純真可憐デザイア*\n
             $iidxsr dpn2 gambol\n
             　*⇒ dp／NORMAL／lv 2／GAMBOL*```"
-    colour_embed_border: 0xf0ff00
+    colour_embed_border: 0xeb36b7
     colour_error: 0x9d2020
     emoji_B: "🟩"
     emoji_N: "🟦"
