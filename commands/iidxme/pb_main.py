@@ -1,5 +1,6 @@
 from discord import Embed
 import re
+import requests
 import logging
 from commands.iidxme.classes.Song import Song
 from commands.iidxme.classes.PbInfo import PbInfo
@@ -29,7 +30,8 @@ def get_result_embed(p_args: list) -> Embed:
         embed_desc = f"Player: {string_util.escape_special_formatting_characters(username)} ({mode.upper()})\n\n"
 
         # 2) fetch the IIDX release version the user last played from iidx.me
-        last_play_ver = scraper.fetch_last_play_version(username)
+        request_session = requests.Session()
+        last_play_ver = scraper.fetch_last_play_version(request_session, username)
 
         # 3) fetch charts from DB with the search criteria
         # 3.1) limit the result set to the number of songs specified in config file
@@ -48,7 +50,7 @@ def get_result_embed(p_args: list) -> Embed:
             song_list = db.fetch_charts(mode, difficulty, level, keywords, result_limit)
 
             # 4) fetch personal best records from iidx.me
-            pb_dict = scraper.fetch_pb_records(username, last_play_ver, song_list)
+            pb_dict = scraper.fetch_pb_records(request_session, username, last_play_ver, song_list)
 
             # 5) construct the embed object desc for display
             # show song level url if both chart difficulty and level are not specified, else show chart level url

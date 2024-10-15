@@ -1,13 +1,13 @@
-import requests
 from bs4 import BeautifulSoup
 import re
+import requests
 import logging
 import utils.config_reader as config
 from commands.iidxme.classes.Song import Song
 from commands.iidxme.classes.PbInfo import PbInfo
 
 
-def fetch_last_play_version(username: str) -> str:
+def fetch_last_play_version(request_session: requests.Session, username: str) -> str:
     logger = logging.getLogger(__name__)
     
     # 'c' = current version
@@ -16,12 +16,12 @@ def fetch_last_play_version(username: str) -> str:
     try:
         # send a GET request and parse the response content
         url = f"https://iidx.me/c/{username}"
-        response = requests.get(url, params='content')
+        response = request_session.get(url, params='content')
 
         status_code = response.status_code
         # case 1: 200 OK
         if status_code == 200:
-            soup = BeautifulSoup(response.content, 'html.parser')
+            soup = BeautifulSoup(response.content, 'lxml', from_encoding='utf-8')
             h2_title = soup.select_one('h2')
             # user exists but no play data in current version
             if h2_title and re.search("VERSION DATA NOT FOUND", h2_title.get_text()):
@@ -48,7 +48,7 @@ def fetch_last_play_version(username: str) -> str:
         raise Exception(config.get('IIDXME_PB', 'msg_parse_page_error'))
 
 
-def fetch_pb_records(username:str, last_play_ver: str, song_list: list[Song]) -> dict[str, PbInfo]:
+def fetch_pb_records(request_session: requests.Session, username:str, last_play_ver: str, song_list: list[Song]) -> dict[str, PbInfo]:
     logger = logging.getLogger(__name__)
 
     chart_pb_dict = {}
@@ -57,13 +57,13 @@ def fetch_pb_records(username:str, last_play_ver: str, song_list: list[Song]) ->
         for song in song_list:
             # fetch the song page content: send a GET request and parse the response content
             url = f"https://iidx.me/{last_play_ver}/{username}/music/{song.song_id}"
-            response = requests.get(url, params='content')
+            response = request_session.get(url, params='content')
 
             if response.status_code == 200:
                 logger.debug(f"fetching {url}")
                 logger.debug(f"-- song id: {song.song_id} / {song.title}")
 
-                song_page_content = BeautifulSoup(response.content, 'html.parser')
+                song_page_content = BeautifulSoup(response.content, 'lxml', from_encoding='utf-8')
 
                 for chart in song.charts:
                     logger.debug(f"-- chart id: {chart.chart_id} / {chart.difficulty}")
