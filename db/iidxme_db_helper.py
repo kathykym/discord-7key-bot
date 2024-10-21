@@ -29,11 +29,11 @@ def get_kanji_by_char(char: str) -> str:
         raise
 
 
-def get_num_of_matched_songs(mode: str, difficulty: str, level: str, keywords: str) -> int:
+def get_num_of_matched_songs(mode: str, difficulty: str, level: str, keywords: str, flag_exact_match: bool) -> int:
     logger = logging.getLogger(__name__)
 
     try:
-        pstmt_dict = _get_chart_conditions_pstmt(mode, difficulty, level, keywords)
+        pstmt_dict = _get_chart_conditions_pstmt(mode, difficulty, level, keywords, flag_exact_match)
 
         with closing(sqlite3.connect(Path(config.get('BOT', 'iidxme_db_file')))) as dbconn:
             with closing(dbconn.cursor()) as cursor:
@@ -49,19 +49,19 @@ def get_num_of_matched_songs(mode: str, difficulty: str, level: str, keywords: s
     
     except sqlite3.DatabaseError as e:
         logger.error(repr(e))
-        raise Exception(config.get('IIDXME_PB', 'msg_db_error'))
+        raise Exception(config.get('IIDX', 'msg_db_error'))
     except Exception as e:
         logger.error(repr(e))
-        raise Exception(config.get('COMMAND_ERROR', 'msg_generic_error'))
+        raise Exception(config.get('IIDX', 'msg_generic_error'))
 
 
-def fetch_charts(mode: str, difficulty: str, level: str, keywords: str, result_limit: int) -> list[Song]:
+def fetch_charts(mode: str, difficulty: str, level: str, keywords: str, flag_exact_match: bool, result_limit: int) -> list[Song]:
     logger = logging.getLogger(__name__)
 
     rows = []
 
     try:
-        pstmt_dict = _get_chart_conditions_pstmt(mode, difficulty, level, keywords)
+        pstmt_dict = _get_chart_conditions_pstmt(mode, difficulty, level, keywords, flag_exact_match)
 
         with closing(sqlite3.connect(Path(config.get('BOT', 'iidxme_db_file')))) as dbconn:
             with closing(dbconn.cursor()) as cursor:
@@ -100,13 +100,13 @@ def fetch_charts(mode: str, difficulty: str, level: str, keywords: str, result_l
     
     except sqlite3.DatabaseError as e:
         logger.error(repr(e))
-        raise Exception(config.get('IIDXME_PB', 'msg_db_error'))
+        raise Exception(config.get('IIDX', 'msg_db_error'))
     except Exception as e:
         logger.error(repr(e))
-        raise Exception(config.get('COMMAND_ERROR', 'msg_generic_error'))
+        raise Exception(config.get('IIDX', 'msg_generic_error'))
 
 
-def _get_chart_conditions_pstmt(mode: str, difficulty: str, level: str, keywords: str) -> dict:
+def _get_chart_conditions_pstmt(mode: str, difficulty: str, level: str, keywords: str, exact_match: bool) -> dict:
     # mode
     pstmt_conditions = " mode = ? "
     pstmt_values = [mode]
@@ -121,14 +121,21 @@ def _get_chart_conditions_pstmt(mode: str, difficulty: str, level: str, keywords
         pstmt_conditions += " AND level = ? "
         pstmt_values.append(level)
 
-    # song keywords
-    pstmt_conditions += " AND ( "
-    pstmt_conditions += "  title || ' ' || IFNULL(title_alias, '') LIKE ? "
-    pstmt_conditions += "  OR title || ' ' || IFNULL(title_alias, '') LIKE ? "
-    pstmt_conditions += "  OR lower(title_romaji) = ? OR lower(title_romaji) LIKE ? OR lower(title_romaji) LIKE ? OR lower(title_romaji) LIKE ? "
-    pstmt_conditions += " ) "
-    pstmt_values.extend(['%'+keywords+'%', '%'+string_util.convert_chi_to_kanji(keywords)+'%',
-                         keywords, keywords+' %', '% '+keywords, '% '+keywords+' %'])
+    # song title keywords
+    if exact_match:
+        pstmt_conditions += " AND ( "
+        pstmt_conditions += "  lower(title) = ? "
+        pstmt_conditions += "  OR lower(title) = ? "
+        pstmt_conditions += " ) "
+        pstmt_values.extend([keywords.lower(), string_util.convert_chi_to_kanji(keywords.lower())])
+    else:
+        pstmt_conditions += " AND ( "
+        pstmt_conditions += "  title || ' ' || IFNULL(title_alias, '') LIKE ? "
+        pstmt_conditions += "  OR title || ' ' || IFNULL(title_alias, '') LIKE ? "
+        pstmt_conditions += "  OR lower(title_romaji) = ? OR lower(title_romaji) LIKE ? OR lower(title_romaji) LIKE ? OR lower(title_romaji) LIKE ? "
+        pstmt_conditions += " ) "
+        pstmt_values.extend(['%'+keywords+'%', '%'+string_util.convert_chi_to_kanji(keywords).replace("\％", "％")+'%',
+                            keywords, keywords+' %', '% '+keywords, '% '+keywords+' %'])
     
     return {'conditions': pstmt_conditions, 'values': pstmt_values}
 

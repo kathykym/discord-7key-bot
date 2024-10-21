@@ -37,31 +37,7 @@ ON_MESSAGE_IIDX_RESULT_COMMENT:
         8th_dan: "九段未？"
     msg_comment_list: "teach|waste data|一般|要啦|勁到🛐|又有貨🛐|渣ga|基本啦|呢隻易|呢D唔計|你加油啦"
 
-IIDXME_PB:
-    title: "💿🎹 iidx.me 歷代 Personal Best"
-    usage: "```💿🎹 __**iidx.me 歷代 Personal Best**__\n
-            打你嘅iidx.me username同埋歌名keywords\n
-            幫你搵你歷代my best燈、分同miss count\n\n
-            **【用法】**\n
-            $iidxpb\n
-            ↳ <iidx.me username>\n
-            ↳ (optional) <sp/dp ~~*唔入當sp*~~><譜面難度: B/N/H/A/L ~~*唔入當全選*~~><level: 1-12 ~~*唔入當全選*~~>\n
-            ↳ <歌名keyword(s) ~~*可用%%代表任何字符 (wildcard)／多過一個word要用double quote包住*~~>\n\n
-            **【例子 & 會搵到咩譜面】**\n
-            $iidxpb user mirror\n
-            　*⇒ sp／全難度／Infinity Mirror*\n
-            $iidxpb user 7 luv%%u\n
-            　*⇒ sp／lv 7／LUV CAN SAVE U*\n
-            $iidxpb user L over\n
-            　*⇒ sp／LEGGENDARIA／Override*\n
-            $iidxpb user dp \"to india\"\n
-            　*⇒ dp／全難度／Fly Away To India*\n
-            $iidxpb user dph 純真可憐\n
-            　*⇒ dp／HYPER／純真可憐デザイア*\n
-            $iidxpb user dpn2 gambol\n
-            　*⇒ dp／NORMAL／lv 2／GAMBOL*```"
-    colour_embed_border: 0xeb36b7
-    colour_error: 0x9d2020
+IIDX:
     abbr_F-COMBO: "FC"
     abbr_EXH-CLEAR: "EX"
     abbr_H-CLEAR: "HC"
@@ -75,20 +51,42 @@ IIDXME_PB:
     emoji_H: "🟨"
     emoji_A: "🟥"
     emoji_L: "🟪"
-    msg_loading: "等等，幫緊你幫緊你"
-    msg_missing_args: "你打漏嘢喎🤏\n最起碼要入齊iidx.me username(s)同歌名keyword"
-    msg_too_many_args: "唔係咁用㗎🆖\nkeywords多過一隻字要用double quote包住"
-    msg_wrong_arg_format: "唔係咁用㗎🆖\nkeywords多過一隻字要用double quote包住"
-    msg_double_quote_misplaced: "唔係咁用㗎🆖\n你D double quote冇包好呀🤏"
-    msg_empty_username: "iidx.me username都唔係咁嘅format🚮"
-    msg_empty_keyword: "歌名keyword一隻字都唔打，你想搵乜㗎？🚮"
-    msg_user_not_found: "iidx.me冇呢個user喎🈚"
-    msg_result_not_found: "咩都搵唔到🈚"
-    msg_too_many_results: "太多歌中search criteria，淨係show頭幾個俾你"
+    msg_missing_args: "你打漏嘢喎🤏\n最起碼要入齊username同歌名keyword"
+    msg_empty_keyword: "歌名Keyword一隻字都唔打，你想搵乜㗎？🚮"
+    msg_invalid_username: "iidx.me username都唔係咁嘅format🚮"
     msg_db_error: "讀唔到database，遲陣再試啦"
     msg_iidxme_conn_failed: "連唔到去iidx.me，遲陣再試啦🔌"
     msg_parse_page_error: "read唔到iidx.me嘅record🔍"
     msg_generic_error: "咦... 個嘢壞咗🚮"
+    msg_user_not_found: "iidx.me冇呢個user喎🈚"
+    msg_result_not_found: "咩都搵唔到🈚"
+    msg_too_many_results: "太多歌中search criteria，淨係show頭幾個俾你"
+
+IIDXME_PB:
+    title: "💿🎹 iidx.me 歷代 Personal Best"
+    usage: "```💿🎹 __**iidx.me 歷代 Personal Best**__\n
+            打你嘅iidx.me username同埋歌名keywords\n
+            幫你搵你歷代my best燈、分同miss count\n\n
+            **【用法】**\n
+            $iidxpb\n
+            ↳ <iidx.me username>\n
+            ↳ (optional) <sp/dp ~~*唔入當sp*~~><譜面難度: B/N/H/A/L ~~*唔入當全選*~~><level: 1-12 ~~*唔入當全選*~~>\n
+            ↳ <歌名keyword(s) ~~*可用double quote包住做exact match*~~>\n\n
+            **【例子 & 會搵到咩譜面】**\n
+            $iidxpb shinggor mirror\n
+            　*⇒ sp／全難度／Infinity Mirror*\n
+            $iidxpb mocha 7 luv u\n
+            　*⇒ sp／lv 7／LUV CAN SAVE U*\n
+            $iidxpb joe L over\n
+            　*⇒ sp／LEGGENDARIA／Override*\n
+            $iidxpb lai dp to india\n
+            　*⇒ dp／全難度／Fly Away To India*\n
+            $iidxpb eclair dph 純真可憐\n
+            　*⇒ dp／HYPER／純真可憐デザイア*\n
+            $iidxpb nob dpn2 \"gambol\"\n
+            　*⇒ dp／NORMAL／lv 2／GAMBOL*```"
+    colour_embed_border: 0xeb36b7
+    msg_loading: "等等，幫緊你幫緊你"
     msg_has_MAX: "有MAX!!!✨ 準備緊BPL?🛐"
     msg_all_FC_and_AAA: "你地高閃高✨🛐"
     msg_all_FC: "你地高🛐"
@@ -104,34 +102,22 @@ IIDXME_SR:
             **【用法】**\n
             $iidxsr\n
             ↳ (optional) <sp/dp ~~*唔入當sp*~~><譜面難度: B/N/H/A/L ~~*唔入當全選*~~><level: 1-12 ~~*唔入當全選*~~>\n
-            ↳ <歌名keyword(s) ~~*可用%%代表任何字符 (wildcard)／多過一個word要用double quote包住*~~>\n\n
+            ↳ <歌名keyword(s) ~~*可用double quote包住做exact match*~~>\n\n
             **【例子 & 會搵到咩譜面嘅分數】**\n
             $iidxsr mirror\n
             　*⇒ sp／全難度／Infinity Mirror*\n
-            $iidxsr 7 luv%%u\n
+            $iidxsr 7 luv u\n
             　*⇒ sp／lv 7／LUV CAN SAVE U*\n
             $iidxsr L over\n
             　*⇒ sp／LEGGENDARIA／Override*\n
-            $iidxsr dp \"to india\"\n
+            $iidxsr dp to india\n
             　*⇒ dp／全難度／Fly Away To India*\n
             $iidxsr dph 純真可憐\n
             　*⇒ dp／HYPER／純真可憐デザイア*\n
-            $iidxsr dpn2 gambol\n
+            $iidxsr dpn2 \"gambol\"\n
             　*⇒ dp／NORMAL／lv 2／GAMBOL*```"
     colour_embed_border: 0xeb36b7
-    colour_error: 0x9d2020
-    emoji_B: "🟩"
-    emoji_N: "🟦"
-    emoji_H: "🟨"
-    emoji_A: "🟥"
-    emoji_L: "🟪"
     msg_notes_TBD: "(no data)"
-    msg_too_many_args: "唔係咁用㗎🆖\nkeywords多過一隻字要用double quote包住"
-    msg_wrong_arg_format: "唔係咁用㗎🆖\nkeywords多過一隻字要用double quote包住"
-    msg_empty_keyword: "歌名keyword一隻字都唔打，你想搵乜㗎？🚮"
-    msg_result_not_found: "咩都搵唔到🈚"
-    msg_too_many_results: "太多歌中search criteria，淨係show頭幾個俾你"
-    msg_generic_error: "咦... 個嘢壞咗🚮"
     result_limit: 5
 
 WORD_CLOUD:

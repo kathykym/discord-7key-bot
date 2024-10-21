@@ -77,17 +77,17 @@ def main():
 
     # BOT COMMANDS - start
     @bot.command(brief=config.get('IIDXME_PB', 'title'), help=config.get('IIDXME_PB', 'usage'))
-    async def iidxpb(ctx, *args: str):
+    async def iidxpb(ctx, *, arg_str: str = ""):
         # reply with a loading message
         bot_message = await ctx.reply(embed=iidxpb_main.prompt_loading_message(), mention_author=False)
         # get personal best records from iidx.me and update the reply
-        await bot_message.edit(embed=iidxpb_main.get_result_embed(args))
+        await bot_message.edit(embed=iidxpb_main.get_result_embed(arg_str))
 
 
     @bot.command(brief=config.get('IIDXME_SR', 'title'), help=config.get('IIDXME_SR', 'usage'))
-    async def iidxsr(ctx, *args: str):
+    async def iidxsr(ctx, *, arg_str: str = ""):
         # get the calculated scores needed for different ranks and reply
-        await ctx.reply(embed=iidxsr_main.get_result_embed(args), mention_author=False)
+        await ctx.reply(embed=iidxsr_main.get_result_embed(arg_str), mention_author=False)
 
 
     @bot.command(brief=config.get('WORD_CLOUD', 'title'), help=config.get('WORD_CLOUD', 'usage'))

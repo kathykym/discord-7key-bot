@@ -1,18 +1,18 @@
 from discord import Embed
-import re
 import math
 import logging
 from commands.iidxme.classes.Song import Song
+import commands.iidxme.iidxme_util as iidx_util
 import db.iidxme_db_helper as db
 import utils.config_reader as config
 import utils.display_util as display_util
 import utils.string_util as string_util
 
 
-def get_result_embed(p_args: list) -> Embed:
+def get_result_embed(p_arg_str: str) -> Embed:
     logger = logging.getLogger(__name__)
 
-    logger.debug(p_args)
+    logger.debug(p_arg_str)
 
     # elements of Discord embed object to be displayed
     embed_title = config.get('IIDXME_SR', 'title')
@@ -22,25 +22,26 @@ def get_result_embed(p_args: list) -> Embed:
 
     try:
         # 1) parse the command arguments
-        mode, difficulty, level, keywords = _parse_arguments(p_args)
+        username_list, mode, difficulty, level, keywords, flag_exact_keyword_match, flag_display_score_percentage \
+            = iidx_util.parse_arguments(num_of_usernames=0, arg_str=p_arg_str)
         
         embed_title += f" ({mode.upper()}) "
 
         # 2) fetch charts from DB with the search criteria
         # 2.1) limit the result set to the number of songs specified in config file
         result_limit = int(config.get('IIDXME_SR', 'result_limit'))
-        num_of_matches = db.get_num_of_matched_songs(mode, difficulty, level, keywords)
+        num_of_matches = db.get_num_of_matched_songs(mode, difficulty, level, keywords, flag_exact_keyword_match)
 
         # display message if number of results exceeds limit
         if num_of_matches > result_limit:
-            embed_desc += config.get('IIDXME_SR', 'msg_too_many_results') + "\n\n"
+            embed_desc += config.get('IIDX', 'msg_too_many_results') + "\n\n"
 
         # display message if no charts are found
         if num_of_matches == 0:
-            embed_desc += config.get('IIDXME_SR', 'msg_result_not_found')
+            embed_desc += config.get('IIDX', 'msg_result_not_found')
         else:
             # 2.2) fetch song & chart info (song_id, chart_id, title, difficulty, level) from DB
-            song_list = db.fetch_charts(mode, difficulty, level, keywords, result_limit)
+            song_list = db.fetch_charts(mode, difficulty, level, keywords, flag_exact_keyword_match, result_limit)
             
             # 3) calculate scores needed for each rank and construct the embed object desc for display
             embed_desc += _cal_score_and_build_embed_desc(song_list)
@@ -48,63 +49,16 @@ def get_result_embed(p_args: list) -> Embed:
     except ValueError as ve:
         logger.debug(repr(ve))
         embed_desc = str(ve)
-        embed_colour = config.get('IIDXME_SR', 'colour_error')
+        embed_colour = config.get('COMMAND_ERROR', 'colour_error')
         embed_footer = ""
     except Exception as e:
         logger.error(repr(e))
         embed_desc = str(e)
-        embed_colour = config.get('IIDXME_SR', 'colour_error')
+        embed_colour = config.get('COMMAND_ERROR', 'colour_error')
         embed_footer = ""
     finally:
         return display_util.construct_embed(title=embed_title, desc=embed_desc, colour=embed_colour,
                                     footer=embed_footer, image_url="")
-    
-
-def _parse_arguments(p_args: list) -> tuple[str, str, str, str]:
-    logger = logging.getLogger(__name__)
-
-    # list of values to be returned
-    mode = "SP"
-    difficulty = "ALL"
-    level = "ALL"
-    keywords = ""
-    
-    num_of_args = len(p_args)
-
-    # command takes exactly 1 or 2 arguments - mode/difficulty/level (optional), song title keywords
-    if num_of_args == 0:
-        raise ValueError(config.get('IIDXME_SR', 'msg_empty_keyword'))
-    elif num_of_args > 2:
-        raise ValueError(config.get('IIDXME_SR', 'msg_too_many_args'))
-    else:
-        keywords = p_args[-1]
-
-        # handle '%' and '%%' (custom wildcard) in song title keywords
-        keywords = re.sub("%%", "<special_handling>", keywords)
-        keywords = re.sub("%", "\%", keywords)
-        keywords = re.sub("<special_handling>", "%", keywords)
-
-        # keywords should not be an empty string or merely a wildcard '%'
-        if (keywords == "") or (keywords == "%"):
-            raise ValueError(config.get('IIDXME_SR', 'msg_empty_keyword'))
-        # if any of mode/difficulty/level are specified
-        elif num_of_args == 2:
-            # check the pattern of second arg to get mode/difficulty/level filters
-            match_regex = re.search("^(SP|DP)?(B|N|H|A|L)?([1-9]|10|11|12)?$", p_args[0].upper())
-            if match_regex:
-                opt_list = re.split("^(SP|DP)?(B|N|H|A|L)?([1-9]|10|11|12)?$", p_args[0].upper())
-                if opt_list[1] is not None:
-                    mode = opt_list[1]
-                if opt_list[2] is not None:
-                    difficulty = opt_list[2]
-                if opt_list[3] is not None:
-                    level = opt_list[3]
-            else:
-                raise ValueError(config.get('IIDXME_SR', 'msg_wrong_arg_format'))
-    
-    logger.debug([mode, difficulty, level, keywords])
-
-    return mode, difficulty, level, keywords
 
 
 def _cal_score_and_build_embed_desc(song_list: list[Song]) -> str:
@@ -125,7 +79,7 @@ def _cal_score_and_build_embed_desc(song_list: list[Song]) -> str:
                 sample:
                 🟪12： 3462 ／ 3270 ／ 3078 ／ 2885
             '''
-            difficulty_emoji = config.get('IIDXME_PB', f"emoji_{chart.difficulty}")
+            difficulty_emoji = config.get('IIDX', f"emoji_{chart.difficulty}")
 
             level_str = "?" if chart.level == -1 else str(chart.level)
             
@@ -159,7 +113,7 @@ def _cal_score_and_build_embed_desc(song_list: list[Song]) -> str:
 def _get_score_display_width(score: str) -> int:
     # adjust number of padding spaces based on the number of digits and number of 1's in the score
     num_of_digits = len(str(score))
-    padding_spaces = 0
+    padding_spaces = 2
     if (num_of_digits < 4):
         padding_spaces += 3
     

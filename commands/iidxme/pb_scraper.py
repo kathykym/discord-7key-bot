@@ -30,22 +30,22 @@ def fetch_last_play_version(request_session: requests.Session, username: str) ->
                 last_play_version = re.search("^\d+", str(li_version.get_text())).group()
         # case 2: 400 bad request due to username not found
         elif status_code == 400:
-            raise ValueError(config.get('IIDXME_PB', 'msg_user_not_found'))
+            raise ValueError(config.get('IIDX', 'msg_user_not_found'))
         # case 3: other status code due to server issues
         else:
-            raise Exception(config.get('IIDXME_PB', 'msg_iidxme_conn_failed'))
+            raise Exception(config.get('IIDX', 'msg_iidxme_conn_failed'))
             
         return last_play_version
         
     except requests.exceptions.RequestException as e:
         logger.error(repr(e))
-        raise Exception(config.get('IIDXME_PB', 'msg_iidxme_conn_failed'))
+        raise Exception(config.get('IIDX', 'msg_iidxme_conn_failed'))
     except ValueError as ve:
         logger.debug(repr(ve))
         raise
     except (KeyError, AttributeError) as e:
         logger.error(repr(e))
-        raise Exception(config.get('IIDXME_PB', 'msg_parse_page_error'))
+        raise Exception(config.get('IIDX', 'msg_parse_page_error'))
 
 
 def fetch_pb_records(request_session: requests.Session, username:str, last_play_ver: str, song_list: list[Song]) -> dict[str, PbInfo]:
@@ -71,13 +71,13 @@ def fetch_pb_records(request_session: requests.Session, username:str, last_play_
                     # extract personal best info of current chart from song page content and add to the result dictionary
                     chart_pb_dict[chart.chart_id] = _extract_pb_info_of_chart(chart.chart_id, song_page_content)
             else:
-                raise Exception(config.get('IIDXME_PB', 'msg_iidxme_conn_failed'))
+                raise Exception(config.get('IIDX', 'msg_iidxme_conn_failed'))
 
         return chart_pb_dict
         
     except requests.exceptions.RequestException as e:
         logger.error(repr(e))
-        raise Exception(config.get('IIDXME_PB', 'msg_iidxme_conn_failed'))
+        raise Exception(config.get('IIDX', 'msg_iidxme_conn_failed'))
     except Exception as e:
         raise
 
@@ -103,7 +103,7 @@ def _extract_pb_info_of_chart(chart_id: str, page_content: BeautifulSoup) -> PbI
         for td in div_td_clear:
             # get the best clear lamp, which can be found in the most recent record
             if td.get_text() != "":
-                pb_lamp = config.get('IIDXME_PB', f"abbr_{td.get_text()}")
+                pb_lamp = config.get('IIDX', f"abbr_{td.get_text()}")
                 break
 
         # 2) find all div objects containing the score info
@@ -146,7 +146,7 @@ def _extract_pb_info_of_chart(chart_id: str, page_content: BeautifulSoup) -> PbI
     
     except (KeyError, AttributeError) as e:
         logger.error(repr(e))
-        raise Exception(config.get('IIDXME_PB', 'msg_parse_page_error'))
+        raise Exception(config.get('IIDX', 'msg_parse_page_error'))
     except Exception as e:
         logger.error(repr(e))
-        raise Exception(config.get('IIDXME_PB', 'msg_generic_error'))
+        raise Exception(config.get('IIDX', 'msg_generic_error'))
