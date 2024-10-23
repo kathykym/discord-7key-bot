@@ -68,8 +68,11 @@ def parse_arguments(num_of_usernames: int, arg_str: str) -> tuple[list[str], str
 
     # 7) check if using exact match mode for song title keywords
     keywords = ' '.join(arg_list)
-    if keywords.startswith('"') and keywords.endswith('"'):
-        flag_exact_keyword_match = True
+    if _is_enclosed_by_double_quotes(keywords):
+        if re.match("^\s*$", keywords[1:-1]):
+            raise ValueError(config.get('IIDX', 'msg_empty_keyword'))
+        else:
+            flag_exact_keyword_match = True
 
     # 8) contruct the query string of song title keyword
     keywords = _construct_keywords_query_string(keywords, flag_exact_keyword_match)
@@ -119,6 +122,21 @@ def _parse_chart_filters(string: str) -> tuple[str, str, str]:
         level = filter_list[3]
 
     return (mode, difficulty, level)
+
+
+def _is_enclosed_by_double_quotes(string: str) -> bool:
+    is_enclosed = False
+
+    # accept “ ” " as valid double quotes
+    string = string.replace('“', '"', 0)
+    string = string.replace('”', '"', 0)
+    string = string.replace('“', '"', -1)
+    string = string.replace('”', '"', -1)
+
+    if len(string) > 1 and string.startswith('"') and string.endswith('"'):
+        is_enclosed = True
+
+    return is_enclosed
 
 
 def _construct_keywords_query_string(keywords: str, flag_exact_match: bool) -> str:
