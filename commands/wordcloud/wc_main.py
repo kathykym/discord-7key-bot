@@ -135,7 +135,7 @@ def _get_custom_emoji_id(string: str) -> int:
     emoji_id = -1
 
     # emoji tag pattern
-    emoji_tag = re.findall("^<\:[a-zA-Z\d_-]+\:[\d]+>$", string)
+    emoji_tag = re.findall("^<[a]?\:[a-zA-Z\d_-]+\:[\d]+>$", string)
     if emoji_tag:
         emoji_id = int(re.findall("[\d]+", emoji_tag[0])[-1])
 
