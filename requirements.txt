@@ -1,0 +1,11 @@
+beautifulsoup4==4.12.3
+discord.py==2.3.2
+emoji==1.7.0
+imojify==0.1.1
+jieba==0.42.1
+matplotlib==3.8.3
+numpy==2.1.3
+Pillow==11.0.0
+python-dotenv==1.0.1
+PyYAML==6.0.1
+Requests==2.32.3
