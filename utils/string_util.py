@@ -1,7 +1,7 @@
 import re
 import logging
 from discord import Guild
-import db.iidxme_db_helper as iidxme_db
+import db.iidxme_db as iidxme_db
 
 
 def escape_special_formatting_characters(string: str) -> str:

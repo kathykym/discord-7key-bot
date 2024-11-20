@@ -1,8 +1,8 @@
 import discord
 import random
 import logging
-import db.bot_db_helper as db
-import utils.config_reader as config
+import db.bot_db as db
+import config.config_reader as config
 
 
 async def follow_suit(bot_user_id: discord.ClientUser, message: discord.Message) -> str:

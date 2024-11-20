@@ -2,9 +2,9 @@ from bs4 import BeautifulSoup
 import re
 import requests
 import logging
-import utils.config_reader as config
-from commands.iidxme.classes.Song import Song
-from commands.iidxme.classes.PbInfo import PbInfo
+import config.config_reader as config
+from db.models.Song import Song
+from commands.iidxme.models.PbInfo import PbInfo
 
 
 def fetch_last_play_version(request_session: requests.Session, username: str) -> str:

@@ -4,7 +4,7 @@ import numpy
 import matplotlib.pyplot as plt
 from pathlib import Path
 import logging
-import utils.config_reader as config
+import config.config_reader as config
 
 
 def generate_word_cloud(text_source: str, emoji_img: Image, filename: str) -> None:

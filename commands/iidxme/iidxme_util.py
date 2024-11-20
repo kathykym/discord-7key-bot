@@ -1,6 +1,6 @@
 import re
 import logging
-import utils.config_reader as config
+import config.config_reader as config
 
 
 def parse_arguments(num_of_usernames: int, arg_str: str) -> tuple[list[str], str, str, str, str, bool, bool]:

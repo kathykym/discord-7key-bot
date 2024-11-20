@@ -2,9 +2,9 @@ import sqlite3
 from pathlib import Path
 from contextlib import closing
 import logging
-from commands.iidxme.classes.Song import Song
-from commands.iidxme.classes.Chart import Chart
-import utils.config_reader as config
+from db.models.Song import Song
+from db.models.Chart import Chart
+import config.config_reader as config
 import utils.string_util as string_util
 
 

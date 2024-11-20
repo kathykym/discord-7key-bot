@@ -2,7 +2,7 @@ import sqlite3
 from pathlib import Path
 from contextlib import closing
 import logging
-import utils.config_reader as config
+import config.config_reader as config
 
 
 def get_bot_param(module: str, key: str) -> str:

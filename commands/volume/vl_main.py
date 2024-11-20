@@ -1,8 +1,8 @@
 from discord import Embed
 import re
 import logging
-import db.bot_db_helper as db
-import utils.config_reader as config
+import db.bot_db as db
+import config.config_reader as config
 import utils.display_util as display_util
 
 

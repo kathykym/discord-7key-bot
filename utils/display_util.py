@@ -1,5 +1,5 @@
 from discord import Embed
-import utils.config_reader as config
+import config.config_reader as config
 
 
 def construct_embed(title: str, desc: str, colour: int, footer: str, image_url: str) -> Embed: 

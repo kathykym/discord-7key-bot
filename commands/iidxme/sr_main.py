@@ -1,10 +1,10 @@
 from discord import Embed
 import math
 import logging
-from commands.iidxme.classes.Song import Song
+from db.models.Song import Song
 import commands.iidxme.iidxme_util as iidx_util
-import db.iidxme_db_helper as db
-import utils.config_reader as config
+import db.iidxme_db as db
+import config.config_reader as config
 import utils.display_util as display_util
 import utils.string_util as string_util
 

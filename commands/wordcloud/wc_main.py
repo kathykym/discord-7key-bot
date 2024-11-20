@@ -10,7 +10,7 @@ import re
 import datetime
 import logging
 import commands.wordcloud.wc_generator as generator
-import utils.config_reader as config
+import config.config_reader as config
 import utils.display_util as display_util
 
 

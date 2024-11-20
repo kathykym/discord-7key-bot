@@ -7,7 +7,7 @@ import commands.iidxme.sr_main as iidxsr_main
 import commands.wordcloud.wc_main as wordcloud_main
 import commands.volume.vl_main as volume_main
 import events.on_message as ping_functions
-import utils.config_reader as config
+import config.config_reader as config
 
 
 def main():

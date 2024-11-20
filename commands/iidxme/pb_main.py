@@ -1,12 +1,12 @@
 from discord import Embed
 import requests
 import logging
-from commands.iidxme.classes.Song import Song
-from commands.iidxme.classes.PbInfo import PbInfo
+from db.models.Song import Song
+from commands.iidxme.models.PbInfo import PbInfo
 import commands.iidxme.iidxme_util as iidx_util
 import commands.iidxme.pb_scraper as scraper
-import db.iidxme_db_helper as db
-import utils.config_reader as config
+import db.iidxme_db as db
+import config.config_reader as config
 import utils.display_util as display_util
 import utils.string_util as string_util
 

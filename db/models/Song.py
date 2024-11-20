@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from commands.iidxme.classes.Chart import Chart
+from db.models.Chart import Chart
 
 
 @dataclass
